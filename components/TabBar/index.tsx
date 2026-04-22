@@ -1,16 +1,12 @@
-/**
- * TabBar.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@rneui/themed';
+import { useSelector } from 'react-redux';
 import { styles } from './styles';
 import SvgIcon from '../../components/SvgIcon';
 import { TAB_BAR_HEIGHT } from '../../constants';
+import { IRootState } from '../../store';
 
 type TabBarProps = {
     style?: {[key: string]: any};
@@ -27,7 +23,11 @@ const TabBar = (props: TabBarProps) => {
         height = TAB_BAR_HEIGHT,
         state,
         descriptors
-    } = props
+    } = props;
+
+    const bagCount = useSelector((state: IRootState) =>
+        state.cart.bag.reduce((sum, item) => sum + item.quantity, 0)
+    );
 
     const onPress = (route, isFocused) => {
         const event = navigation.emit({
@@ -74,8 +74,19 @@ const TabBar = (props: TabBarProps) => {
                             key={index}
                         >
                             <View style={styles().center}>
-                                <SvgIcon name={label.toLowerCase()} color={isFocused ? '#DB3022' : '#9B9B9B'} isFocused={isFocused} width={30} height={30} />
-                                <Text style={[styles().navText, { color: isFocused ? '#DB3022' : '#9B9B9B' }]}>
+                                <View>
+                                    <SvgIcon name={label.toLowerCase()} color={isFocused ? '#2563EB' : '#9B9B9B'} isFocused={isFocused} width={30} height={30} />
+                                    {label.toLowerCase() === 'bag' && bagCount > 0 && (
+                                        <View style={{
+                                            position: 'absolute', top: -4, right: -6,
+                                            backgroundColor: '#2563EB', borderRadius: 10,
+                                            minWidth: 18, height: 18, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 3
+                                        }}>
+                                            <Text style={{ color: '#fff', fontSize: 10, fontWeight: '700' }}>{bagCount}</Text>
+                                        </View>
+                                    )}
+                                </View>
+                                <Text style={[styles().navText, { color: isFocused ? '#2563EB' : '#9B9B9B' }]}>
                                     {label}
                                 </Text>
                             </View>

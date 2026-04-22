@@ -1,9 +1,3 @@
-/**
- * mobileClassification.ts
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 
 import * as tf from "@tensorflow/tfjs";
 import * as mobilenet from '@tensorflow-models/mobilenet';

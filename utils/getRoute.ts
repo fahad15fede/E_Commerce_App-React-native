@@ -1,9 +1,3 @@
-/**
- * getRoute.ts
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 
 import { useTranslation } from "react-i18next";
 

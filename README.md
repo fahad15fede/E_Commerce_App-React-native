@@ -1,6 +1,39 @@
-# E-commerce Template using React Native and Expo
+# ShopApp — React Native E-Commerce App
 
-This is a simple e-commerce template with a visual search using TensorFlow built with React Native and Expo. It provides a basic structure and components to help you kickstart your e-commerce app development. The link to the UX design can be found [here](https://www.figma.com/file/h8Qh89sALKZK9Ru38NDg1u/E-Commerce-App-Design-(Community))
+A fully functional mobile e-commerce application built with React Native and Expo. Products are fetched live from the [FakeStore API](https://fakestoreapi.com/). Includes visual search powered by TensorFlow.
+
+## App Name
+ShopApp
+
+## Technologies Used
+- React Native + Expo
+- TypeScript
+- React Navigation (Stack + Tab)
+- Redux Toolkit (slice + async thunk)
+- Axios (API integration)
+- AsyncStorage (offline caching)
+- Formik + Yup (form validation)
+- i18next (localization — English & Spanish)
+- @rneui/themed (UI components)
+- TensorFlow.js (visual search)
+
+## Features
+- Authentication flow (Login, Register, Forgot Password)
+- Bottom tab navigation (Home, Shop, Bag, Favorites, Profile)
+- Live product listing from FakeStore public API
+- Loading indicator and error handling on API calls
+- Offline caching with AsyncStorage
+- Product filtering (price range, color, size, category)
+- Sort products by popularity, price, etc.
+- Visual search (camera + image picker)
+- Localization (English / Spanish)
+
+## How to Run
+```bash
+npm install
+npx expo start
+```
+Then scan the QR code with Expo Go on your device, or press `a` for Android emulator / `i` for iOS simulator.
 
 ## Screenshots
 

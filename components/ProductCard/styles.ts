@@ -14,6 +14,7 @@ export const styles = (width?) => StyleSheet.create({
         marginHorizontal: 10,
         marginVertical: 10,
         justifyContent: "flex-start",
+        overflow: 'visible',
     },
     imageContainer: {
         flex: 1,

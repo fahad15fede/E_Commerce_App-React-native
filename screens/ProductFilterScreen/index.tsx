@@ -1,14 +1,9 @@
-/**
- * ProductFilterScreen.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { useTheme, Button } from '@rneui/themed';
 import { scale } from "react-native-size-matters";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from 'react-redux';
 import { styles } from './styles';
 import AppContainer from '../../components/HOC/AppContainer';
 import { colors, sizes, productCategories } from "../../data";
@@ -16,16 +11,17 @@ import PriceRange from './PriceRange';
 import ColorSelection from './ColorSelection';
 import SizeSelection from './SizeSelection';
 import CategorySelection from './CategorySelection';
+import { applyFilters, resetFilters } from '../../store/cartSlice';
 
 const ProductFilter = ({ navigation }) => {
     const { theme } = useTheme();
     const { t } = useTranslation();
-    const [low, setLow] = useState<number>(78);
-    const [high, setHigh] = useState<number>(143);
+    const dispatch = useDispatch();
+    const [low, setLow] = useState<number>(0);
+    const [high, setHigh] = useState<number>(55600); // ~200 USD in PKR
     const [colorList, setColorList] = useState<any>(colors);
     const [sizeList, setSizeList] = useState<any>(sizes);
     const [currentCategory, setCurrentCategory] = useState<number>(0);
-
 
     const handleValueChange = useCallback((lowValue: number, highValue: number) => {
         setLow(lowValue);
@@ -34,11 +30,27 @@ const ProductFilter = ({ navigation }) => {
 
     const handleColorSelection = (index: number) => {
         setColorList(Object.assign([], colorList, { [index]: { color: colorList[index].color, selected: !colorList[index].selected } }));
-    }
+    };
 
     const handleSizeSelection = (index: number) => {
         setSizeList(Object.assign([], sizeList, { [index]: { size: sizeList[index].size, selected: !sizeList[index].selected } }));
-    }
+    };
+
+    const handleApply = () => {
+        dispatch(applyFilters({
+            priceLow: low / 278,
+            priceHigh: high / 278,
+            colors: colorList.filter((c: any) => c.selected).map((c: any) => c.color),
+            sizes: sizeList.filter((s: any) => s.selected).map((s: any) => s.size),
+            category: productCategories[currentCategory],
+        }) as any);
+        navigation.goBack();
+    };
+
+    const handleDiscard = () => {
+        dispatch(resetFilters() as any);
+        navigation.goBack();
+    };
 
     return (
         <>
@@ -49,6 +61,8 @@ const ProductFilter = ({ navigation }) => {
                         onValueChanged={handleValueChange}
                         low={low}
                         high={high}
+                        min={0}
+                        max={55600}
                     />
                     <ColorSelection
                         title={t('common:colors')}
@@ -72,14 +86,14 @@ const ProductFilter = ({ navigation }) => {
                 <View style={[styles.horizontalContainer, { justifyContent: 'space-between' }]}>
                     <Button
                         title={t('common:discard')}
-                        onPress={() => navigation.goBack()}
+                        onPress={handleDiscard}
                         style={{ width: scale(155) }}
                         buttonStyle={[styles.button, { borderColor: theme.colors.black }]}
                         titleStyle={{ color: theme.colors.black, fontWeight: '500' }}
                     />
                     <Button
                         title={t('common:apply')}
-                        onPress={() => {}}
+                        onPress={handleApply}
                         style={{ width: scale(155) }}
                     />
                 </View>

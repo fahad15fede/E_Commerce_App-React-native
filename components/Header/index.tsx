@@ -1,9 +1,3 @@
-/**
- * Header.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 
 import React, { Dispatch } from 'react';
 import { View, TouchableOpacity } from 'react-native';
@@ -32,7 +26,8 @@ const Header: React.FunctionComponent<HeaderComponentProps> = (props) => {
 
     let title = getHeaderTitle(route);
     const isShowHeader = isShowBackIcon || isShowSearchIcon;
-    title = title ? title : productState.category;
+    // Only show category as title when navigating into a stack (back icon visible)
+    if (isShowBackIcon && !title) title = productState.category;
 
     const handleSearch = () => {
         navigation.navigate('VisualSearch');

@@ -1,9 +1,3 @@
-/**
- * RegisterScreen.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 
 import React from 'react';
 import { View, TouchableHighlight } from 'react-native';

@@ -1,6 +1,6 @@
 export const theme = {
     lightColors: {
-      primary: '#f2f2f2',
+      primary: '#2563EB',
       secondary: '#2D2D2D',
       white: '#fff',
       black: '#222222',
@@ -14,12 +14,12 @@ export const theme = {
       searchBg: '#f2f2f2',
       success: '#2AA952',
       warning: '#FFBA49',
-      error: '#DB3022',
+      error: '#2563EB',
       disabled: '#f2f2f2',
       divider: '#f2f2f2',
     }, 
     darkColors: {
-      primary: '#121212',
+      primary: '#2563EB',
       secondary: '#f2f2f2',
       white: '#000',
       black: '#fff',
@@ -33,9 +33,8 @@ export const theme = {
       searchBg: '#f2f2f2',
       success: '#2AA952',
       warning: '#FFBA49',
-      error: '#DB3022',
+      error: '#2563EB',
       disabled: '#f2f2f2',
       divider: '#f2f2f2'
     },
-    // mode: 'dark',
 }

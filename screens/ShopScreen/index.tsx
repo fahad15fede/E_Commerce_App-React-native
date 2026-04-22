@@ -1,9 +1,3 @@
-/**
- * ShopScreen.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 
 import React, { useState, Dispatch } from 'react';
 import { View, Dimensions, Text } from 'react-native';
@@ -32,7 +26,7 @@ const Shop = ({ navigation }) => {
 
     return (
         <AppContainer>
-            <View style={{ marginTop: HEADER_HEIGHT }}>
+            <View style={{ marginTop: 10 }}>
                 <Tab items={categories} index={index} setIndex={setIndex} />
                 <View style={[styles.banner, { width: screenWidth, height: screenHeight }]}>
                     <Text style={styles.title}>{categoryBanner.title}</Text>

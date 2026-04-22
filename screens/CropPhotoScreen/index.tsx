@@ -1,9 +1,3 @@
-/**
- * VisualSearchScreen.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 
 import React, { useState } from 'react';
 import { View, Dimensions, TouchableOpacity, Image } from 'react-native';

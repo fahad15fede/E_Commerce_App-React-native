@@ -1,9 +1,3 @@
-/**
- * CategorySelection.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 import React from 'react';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { Text } from '@rneui/themed';

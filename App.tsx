@@ -1,21 +1,16 @@
 
-/**
- * App.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@rneui/themed';
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import StackNavigator from "./navigations/StackNavigator";
 import TabNavigator from "./navigations/TabNavigator";
 import { theme } from './styles/Theme';
 import store from "./store";
+import { fetchProducts } from './store/productSlice';
 import './localization/i18n';
 
 const myTheme = createTheme({
@@ -41,7 +36,7 @@ const myTheme = createTheme({
     },
     Button: {
       buttonStyle: {
-        backgroundColor: '#DB3022',
+        backgroundColor: '#2563EB',
         borderRadius: 25,
         paddingVertical: 15,
       },
@@ -63,14 +58,24 @@ const App = () => {
       <SafeAreaProvider>
         <NavigationContainer>
           <ThemeProvider theme={myTheme}>
-            {
-              isAuthenticated ? <TabNavigator /> : <StackNavigator />
-            }
+            <AppContent isAuthenticated={isAuthenticated} />
           </ThemeProvider>
         </NavigationContainer>
       </SafeAreaProvider>
     </Provider>
   );
+};
+
+// Inner component so it can use hooks inside the Provider
+const AppContent = ({ isAuthenticated }) => {
+  const dispatch = useDispatch();
+
+  // Fetch products once on app start
+  useEffect(() => {
+    dispatch(fetchProducts() as any);
+  }, []);
+
+  return isAuthenticated ? <TabNavigator /> : <StackNavigator />;
 };
 
 export default App;

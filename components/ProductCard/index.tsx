@@ -1,14 +1,9 @@
-/**
- * ProductCard.tsx
- * Copyright (c) 2023 James Ugbanu.
- * Licensed under the MIT License.
- */
-
 import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import { Badge, Icon, Text, useTheme } from '@rneui/themed';
 import { scale, verticalScale } from "react-native-size-matters";
 import { styles } from './styles';
+import { toPKR } from '../../utils/currency';
 
 type ProductCardProps = {
     image?: any;
@@ -27,12 +22,9 @@ type ProductCardProps = {
     name: string;
     imageWidth?: number;
     imageHeight?: number;
-    button?: {
-        iconName?: string;
-        iconType?: string;
-        iconColor?: string;
-        iconSize?: number;
-    };
+    isFavorite?: boolean;
+    onFavoritePress?: () => void;
+    onAddToBag?: () => void;
     onPress?: () => void;
 };
 
@@ -43,9 +35,7 @@ const ProductCard = (props: ProductCardProps) => {
         image,
         label,
         badgeStyle,
-        buttonStyle = {
-            backgroundColor: '#fff'
-        },
+        buttonStyle = { backgroundColor: '#fff' },
         ratingValue = 0,
         ratingCount = 5,
         totalRating = 0,
@@ -57,20 +47,17 @@ const ProductCard = (props: ProductCardProps) => {
         name,
         imageWidth = 135,
         imageHeight = 150,
-        button = {
-            iconName: "favorite-border",
-            iconType: "material-icons",
-            iconColor: "#9B9B9B",
-            iconSize: 18
-        },
-        onPress
+        isFavorite = false,
+        onFavoritePress,
+        onAddToBag,
+        onPress,
     } = props;
 
     imageWidth = scale(imageWidth);
 
     return (
         <View style={[styles(imageWidth).container]}>
-            <View style={styles(imageWidth).imageContainer} >
+            <View style={styles(imageWidth).imageContainer}>
                 <TouchableOpacity onPress={onPress}>
                     <Image source={image} resizeMode="cover" style={[styles(imageWidth).image, imageStyle, { height: verticalScale(imageHeight) }]} />
                     <Badge
@@ -82,12 +69,13 @@ const ProductCard = (props: ProductCardProps) => {
                     />
                     <Icon
                         raised
-                        name={button.iconName}
-                        type={button.iconType}
-                        color={button.iconColor}
-                        size={button.iconSize}
+                        name={isFavorite ? "favorite" : "favorite-border"}
+                        type="material-icons"
+                        color={isFavorite ? '#2563EB' : "#9B9B9B"}
+                        size={18}
                         containerStyle={[{ position: 'absolute', bottom: -20, right: -10, backgroundColor: '#fff' }, buttonStyle]}
-                        onPress={() => console.log('hello')} />
+                        onPress={onFavoritePress}
+                    />
                 </TouchableOpacity>
             </View>
             <View style={styles().productInfo}>
@@ -108,14 +96,20 @@ const ProductCard = (props: ProductCardProps) => {
                 <Text style={styles().text} h4>{category}</Text>
                 <Text style={styles().text}>{name}</Text>
                 <View style={styles().priceContainer}>
-                    <Text style={[styles().price, salePrice && { textDecorationLine: 'line-through', }]}>{price}{currency}</Text>
-                    {salePrice && <Text style={styles().salePrice}>{salePrice}{currency}</Text>}
+                    <Text style={[styles().price, salePrice && { textDecorationLine: 'line-through' }]}>{toPKR(price)}</Text>
+                    {salePrice && <Text style={styles().salePrice}>{toPKR(salePrice)}</Text>}
                 </View>
+                {onAddToBag && (
+                    <TouchableOpacity
+                        onPress={onAddToBag}
+                        style={{ marginTop: 6, backgroundColor: '#222', borderRadius: 20, paddingVertical: 6, alignItems: 'center' }}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 11, fontWeight: '600' }}>Add to Bag</Text>
+                    </TouchableOpacity>
+                )}
             </View>
-
         </View>
     );
-}
-
+};
 
 export default ProductCard;
